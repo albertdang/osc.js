@@ -143,6 +143,9 @@
         this.socket = dgram.createSocket("udp4");
         this.socket.bind(this.options.localPort, this.options.localAddress, function () {
             that.emit("open", this.socket);
+            // enable multicast
+            that.socket.setBroadcast(true);
+            that.socket.setMulticastTTL(128);
         });
     };
 
@@ -242,9 +245,7 @@
             return;
         }
 
-        this.socket.send(new Uint8Array(encoded), {
-            binary: true
-        });
+        this.socket.send(encoded);
     };
 
     p.close = function (code, reason) {
