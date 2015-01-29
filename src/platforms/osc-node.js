@@ -141,7 +141,7 @@
     p.open = function () {
         var that = this;
         this.socket = dgram.createSocket("udp4");
-        this.socket.bind(this.options.localPort, this.options.localAddress, function () {
+        this.socket.bind(this.options.localPort, function () {
             that.emit("open", this.socket);
             // enable multicast
             that.socket.setBroadcast(true);
